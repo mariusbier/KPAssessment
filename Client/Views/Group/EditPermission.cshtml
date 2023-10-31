@@ -1,0 +1,53 @@
+﻿@using Client.ViewModels;
+
+@model EditPermission
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("SavePermission", "Group"))
+{
+    <div class="form-horizontal">
+        <h4>Permission</h4>
+        @Html.HiddenFor(model => model.Permission.PermissionId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Permission.Name)
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Permission.Name)
+            </div>
+        </div>
+
+        @if (Model.Permission.Groups != null && Model.Permission.Groups.Count() > 0)
+        {
+            <hr />
+            <h4>Groups that have @Model.Permission.Name</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Permission.Groups.Count(); i++)
+                    {
+                        var group = Model.Permission.Groups[i];
+                        <tr>
+                            <td>@Html.DisplayFor(u => group.Name)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("New Permission", "EditPermission", new { permissionId = new Guid() }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Back to List", "ListPermissions", "Group", null, new { @class = "btn btn-info" })
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

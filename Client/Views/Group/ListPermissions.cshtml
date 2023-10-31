@@ -1,0 +1,32 @@
+﻿@model List<Permission>
+
+@{
+    ViewData["Title"] = "Permissions";
+}
+
+<h2>Permission List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>GUID</th>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            var permission = Model[i];
+            <tr>
+                <td>@Html.DisplayFor(u => permission.PermissionId)</td>
+                <td>@Html.DisplayFor(u => permission.Name)</td>
+                <td>@Html.ActionLink("Edit", "EditPermission", new { permissionId = permission.PermissionId }, new { @class = "btn btn-warning" })</td>
+                <td>@Html.ActionLink("Delete", "RemovePermission", new { permissionId = permission.PermissionId }, new { @class = "btn btn-danger" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Back to Groups", "ListGroups", "Group", null, new { @class = "btn btn-info" })
+@Html.ActionLink("New Permission", "EditPermission", new { permissionId = new Guid() }, new { @class = "btn btn-success" })

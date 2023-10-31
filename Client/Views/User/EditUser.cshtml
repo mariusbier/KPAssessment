@@ -1,0 +1,69 @@
+﻿@using Client.ViewModels;
+
+@model EditUser
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("SaveUser", "User"))
+{
+    <div class="form-horizontal">
+        <h4>User</h4>
+        @Html.HiddenFor(model => model.User.UserId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.FirstName)
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.User.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.LastName)
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.LastName)
+            </div>
+        </div>
+        @if (Model.User.UserId != Guid.Empty)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                        <th>Assign/Unassign</th>
+                        <th>Edit Group</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Groups.Count(); i++)
+                    {
+                        var group = Model.Groups[i];
+                        <tr>
+                            <td>@Html.DisplayFor(u => group.Name)</td>
+                            <td>
+                                @if (Model.SelectedGroups.Contains(group.GroupId))
+                                {
+                                    @Html.ActionLink("Unassign", "UnassignGroup", "User", new { groupId = group.GroupId }, new { @class = "btn btn-danger" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Assign", "AssignGroup", "User", new { groupId = group.GroupId }, new { @class = "btn btn-success" })
+                                }
+                            </td>
+                            <td>@Html.ActionLink("Edit Group", "EditGroup", "Group", new { groupId = group.GroupId }, new { @class = "btn btn-warning" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Back to List", "ListUsers", "User", null, new { @class = "btn btn-info" })
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

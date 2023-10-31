@@ -1,0 +1,32 @@
+﻿@model List<Group>
+
+@{
+    ViewData["Title"] = "Groups";
+}
+
+<h2>Group List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>GUID</th>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            var group = Model[i];
+            <tr>
+                <td>@Html.DisplayFor(u => group.GroupId)</td>
+                <td>@Html.DisplayFor(u => group.Name)</td>
+                <td>@Html.ActionLink("Edit", "EditGroup", new { groupId = group.GroupId }, new { @class = "btn btn-warning" })</td>
+                <td>@Html.ActionLink("Delete", "RemoveGroup", new { groupId = group.GroupId }, new { @class = "btn btn-danger" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Back to Users", "ListUsers", "User", null, new { @class = "btn btn-info" })
+@Html.ActionLink("New Group", "EditGroup", new { groupId = new Guid() }, new { @class = "btn btn-success" })

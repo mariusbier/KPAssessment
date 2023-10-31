@@ -1,0 +1,85 @@
+﻿@using Client.ViewModels;
+
+@model EditGroup
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("SaveGroup", "Group"))
+{
+    <div class="form-horizontal">
+        <h4>Group</h4>
+        @Html.HiddenFor(model => model.Group.GroupId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Group.Name)
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Group.Name)
+            </div>
+        </div>
+
+        @if (Model.Group.Users != null && Model.Group.Users.Count() > 0)
+        {
+            <hr />
+            <h4>Users that have @Model.Group.Name</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Group.Users.Count(); i++)
+                    {
+                        var user = Model.Group.Users[i];
+                        <tr>
+                            <td>@user.FirstName @user.LastName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        @if (Model.Group.GroupId != Guid.Empty)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Permission</th>
+                        <th>Assign/Unassign</th>
+                        <th>Edit Permission</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Permissions.Count(); i++)
+                    {
+                        var permission = Model.Permissions[i];
+                        <tr>
+                            <td>@Html.DisplayFor(u => permission.Name)</td>
+                            <td>
+                                @if (Model.SelectedPermissions.Contains(permission.PermissionId))
+                                {
+                                    @Html.ActionLink("Unassign", "UnassignPermission", "Group", new { permissionId = permission.PermissionId }, new { @class = "btn btn-danger" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Assign", "AssignPermission", "Group", new { permissionId = permission.PermissionId }, new { @class = "btn btn-success" })
+                                }
+                            </td>
+                            <td>@Html.ActionLink("Edit Permission", "EditPermission", "Group", new { permissionId = permission.PermissionId }, new { @class = "btn btn-warning" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Back to List", "ListGroups", "Group", null, new { @class = "btn btn-info" })
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
