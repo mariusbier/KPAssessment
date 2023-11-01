@@ -42,6 +42,12 @@ namespace UserServiceAPI.Controllers
             return _UserLogic.CountAllUsers();
         }
 
+        [HttpGet]
+        public int GetUserGroupCount(Guid userId)
+        {
+            return _UserLogic.CountUserGroups(userId);
+        }
+
         [HttpPost]
         public List<GetGroupResponse> GetUserGroups([FromBody] DefaultRequest userRequest)
         {

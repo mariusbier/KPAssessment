@@ -38,8 +38,6 @@ namespace Client.Controllers
                 {
                     groups = new List<Group>(); // or any appropriate error handling
                 }
-
-                
             }
             catch (Exception e)
             {

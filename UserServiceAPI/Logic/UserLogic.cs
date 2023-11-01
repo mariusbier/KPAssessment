@@ -38,7 +38,7 @@ namespace UserServiceAPI.Logic
         public List<User> GetAllUsers() {
             try
             {
-                var users = DatabaseContext.Users.ToList();
+                var users = DatabaseContext.Users.Include(x => x.Groups).ToList();
                 
                 return users;
             }
@@ -52,9 +52,23 @@ namespace UserServiceAPI.Logic
         public int CountAllUsers() {
             try
             {
-                var NumberOfUsers = DatabaseContext.Users.Count();
+                var numberOfUsers = DatabaseContext.Users.Count();
                 
-                return NumberOfUsers;
+                return numberOfUsers;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message, ex);
+            }
+            return 0;
+        }
+
+        public int CountUserGroups(Guid userId) {
+            try
+            {
+                var numberOfUserGroups = DatabaseContext.Users.Where(x => x.UserId == userId).Include(x => x.Groups).Count();
+                
+                return numberOfUserGroups;
             }
             catch(Exception ex)
             {

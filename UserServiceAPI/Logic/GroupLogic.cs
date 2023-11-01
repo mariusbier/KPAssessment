@@ -18,7 +18,7 @@ namespace UserServiceAPI.Logic
         public List<Group> GetAllGroups() {
             try
             {
-                var groups = DatabaseContext.Groups.ToList();
+                var groups = DatabaseContext.Groups.Include(x => x.Permissions).ToList();
                 
                 return groups;
             }

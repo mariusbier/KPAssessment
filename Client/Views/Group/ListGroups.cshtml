@@ -11,6 +11,7 @@
         <tr>
             <th>GUID</th>
             <th>Name</th>
+            <th>Permission Count</th>
             <th></th>
             <th></th>
         </tr>
@@ -22,6 +23,7 @@
             <tr>
                 <td>@Html.DisplayFor(u => group.GroupId)</td>
                 <td>@Html.DisplayFor(u => group.Name)</td>
+                <td>@Html.DisplayFor(u => group.Permissions.Count)</td>
                 <td>@Html.ActionLink("Edit", "EditGroup", new { groupId = group.GroupId }, new { @class = "btn btn-warning" })</td>
                 <td>@Html.ActionLink("Delete", "RemoveGroup", new { groupId = group.GroupId }, new { @class = "btn btn-danger" })</td>
             </tr>
